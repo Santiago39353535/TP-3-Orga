@@ -74,7 +74,7 @@
 		{"from": "Const4", "out": "Out", "to": "PCAdder", "in": "In2"},
 		{"from": "PCAdder", "out": "PC+4", "to": "ForkPCAdder", "in": "In"},
 		{"from": "ForkPCAdder", "out": "Out1", "to": "MuxPC", "in": "0", "points": [{"x": 155, "y": 150}, {"x": 10, "y": 150}, {"x": 10, "y": 259}]},
-		{"from": "MuxPC", "out": "Out", "to": "MuxJump", "in": "0"},
+		{"from": "MuxPC", "out": "Out", "to": "MuxJump", "in": "0", "points": [{"x": 40, "y": 10}, {"x": 560, "y": 10}, {"x":560, "y": 20}], "end": {"x": 580, "y":20}},
 		{"from": "ForkPCAdder", "out": "Out2", "to": "DistPC", "in": "In"},
 		{"from": "DistPC", "out": "31-0", "to": "IF/ID", "in": "NewPC", "end": {"x": 180, "y": 168}},
 		{"from": "InstMem", "out": "Instruction", "to": "IF/ID", "in": "Instruction", "end": {"x": 180, "y": 265}},
@@ -199,12 +199,12 @@
 
 		{"from": "EX/MEM", "out": "Jump", "to": "MuxJump", "in": "Jump", "start": {"x": 565, "y": 120}, "points": [{"x": 590, "y": 120}]},
 		{"from": "ConcatJump", "out": "Out", "to": "MuxJump", "in": 1},
-		{"from": "MuxJump", "out": "Out", "to": "PC", "in": "NewPC"},
-		{"from": "DistInst", "out": "25-0", "to": "ID/EX", "in": "Destino"},
-		{"from": "ID/EX", "out": "Destino", "to": "EX/MEM", "in": "Destino"},
-		{"from": "EX/MEM", "out":"Destino", "to": "ShiftJump", "in":"In" },
-		{"from":"ShiftJump", "out": "Out", "to": "ConcatJump", "in": "In2"},
-		{"from": "DistPC", "out": "31-28", "to": "ConcatJump", "in":"In1"}
+		{"from": "MuxJump", "out": "Out", "to": "PC", "in": "NewPC","points": [{"x": 800, "y": 40},{"x": 800, "y": 490}, {"x": 40, "y": 490}]},
+		{"from": "DistInst", "out": "25-0", "to": "ID/EX", "in": "Destino", "start": {"x": 205, "y": 260}, "end": {"x": 390, "y": 200}, "points": [{"x": 240, "y": 260},{"x": 240, "y": 200}]},
+		{"from": "ID/EX", "out": "Destino", "to": "EX/MEM", "in": "Destino","start": {"x": 400, "y": 164},"end": {"x": 550, "y": 164}},
+		{"from": "EX/MEM", "out":"Destino", "to": "ShiftJump", "in":"In","start": {"x": 550, "y": 160}, "points": [{"x": 470, "y": 160}],  "end": {"x": 470, "y": 50}},
+		{"from":"ShiftJump", "out": "Out", "to": "ConcatJump", "in": "In2", "start": {"x": 430, "y": 40}},
+		{"from": "DistPC", "out": "31-28", "to": "ConcatJump", "in":"In1","start":{"x": 165, "y": 158} , "points": [{"x": 165, "y": 65}, {"x": 510, "y":65}]}
 
 	],
 	"reg_names": ["zero", "at", "v0", "v1", "a0", "a1", "a2", "a3", "t0", "t1", "t2", "t3", "t4", "t5", "t6", "t7", "s0", "s1", "s2", "s3", "s4", "s5", "s6", "s7", "t8", "t9", "k0", "k1", "gp", "sp", "fp", "ra"],
