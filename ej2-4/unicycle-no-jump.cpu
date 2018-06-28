@@ -74,9 +74,9 @@
 		{"from": "DataMem", "out": "ReadData", "to": "MuxMem", "in": "1"},
 		{"from": "ForkMem", "out": "Out2", "to": "MuxMem", "in": "0", "points": [{"x": 470, "y": 352}, {"x": 570, "y": 352}, {"x": 570, "y": 281}]},
 		{"from": "MuxMem", "out": "Out", "to": "RegBank", "in": "WriteData", "end": {"x": 250, "y": 297}, "points": [{"x": 600, "y": 287}, {"x": 600, "y": 400}, {"x": 240, "y": 400}, {"x": 240, "y": 297}]},
-		{"from": "MuxBranch", "out": "Out", "to": "JReg", "in": "0"},
+		{"from": "MuxBranch", "out": "Out", "to": "JReg", "in": "0", "points": [ {"x": 520, "y": 20}]},
 
-		{"from": "Control", "out": "Jump", "to": "JReg", "in": "JReg"},
+		{"from": "Control", "out": "Jump", "to": "JReg", "in": "JReg","start": {"x": 280, "y": 140},"points": [ {"x": 338, "y": 140}]},
 		{ "from": "JReg", "out": "Out", "to": "PC", "in":"NewPC" ,"points": [ {"x": 30, "y": 10}, {"x": 30, "y": 265}]},
 		{"from": "ForkJReg", "out": "Out2", "to": "ALU", "in": "In1"},
 		{"from": "ForkJReg", "out": "Out1", "to": "JReg", "in": "1"}
