@@ -64,7 +64,9 @@
 
 		"ForkJReg":  {"type": "Fork", "x": 370, "y": 248, "size": 32, "in": "In", "out": ["Out1", "Out2"]},
 		"ForkPC2":  {"type": "Fork", "x": 370, "y": 175, "size": 32, "in": "In", "out": ["Out1", "Out2"]},
-		"MuxJReg":     {"type": "Multiplexer", "latency": 15, "x": 30, "y": 300, "size": 32, "sel": "Jump", "out": "Out", "in": ["0", "1"]}
+		"MuxJReg":     {"type": "Multiplexer", "latency": 15, "x": 30, "y": 300, "size": 32, "sel": "Jump", "out": "Out", "in": ["0", "1"]},
+		"ForkJump":  {"type": "Fork", "x": 38, "y": 90, "size": 1, "in": "In", "out": ["Out1", "Out2"]},
+		"OrFlush2":    {"type": "Or", "x": 100, "y": 100, "in1": "Branch", "in2": "Jump", "out": "Flush"}
 	},
 	"wires": [
 		{"from": "PC", "out": "PC", "to": "ForkPC", "in": "In"},
@@ -171,7 +173,7 @@
 		{"from": "ForkBr2", "out": "Out1", "to": "ForkBr3", "in": "In"},
 		{"from": "ForkBr2", "out": "Out2", "to": "OrFlush", "in": "Branch", "end": {"x": 397, "y": 70}},
 		{"from": "ForkBr3", "out": "Out1", "to": "MuxPC", "in": "PCSrc", "points": [{"x": 22, "y": 62}]},
-		{"from": "ForkBr3", "out": "Out2", "to": "IF/ID", "in": "Flush"},
+		{"from": "ForkBr3", "out": "Out2", "to": "OrFlush2", "in": "Branch"},
 		{"from": "EX/MEM", "out": "MemRead", "to": "DataMem", "in": "MemRead", "start": {"x": 565, "y": 140}, "points": [{"x": 590, "y": 140}], "end": {"x": 590, "y": 242}},
 		{"from": "EX/MEM", "out": "MemWrite", "to": "DataMem", "in": "MemWrite", "start": {"x": 565, "y": 135}, "points": [{"x": 650, "y": 135}], "end": {"x": 650, "y": 242}},
 		{"from": "EX/MEM", "out": "MemToReg", "to": "MEM/WB", "in": "MemToReg", "start": {"x": 565, "y": 130}, "end": {"x": 680, "y": 130}},
@@ -195,9 +197,12 @@
 
 		{"from": "ForkJReg", "out": "Out2", "to": "ID/EX", "in": "ReadData1", "end": {"x": 390, "y": 248}},
 		{"from": "ForkPC2", "out": "Out2", "to": "ID/EX", "in": "NewPC", "end": {"x": 390, "y": 175}},
-		{"from": "Control", "out": "Jump", "to": "MuxJReg", "in": "Jump", "start": {"x":230,"y": 90}, "points": [{"x": 38, "y": 90}]},
+		{"from": "ForkJump", "out": "Out1", "to": "MuxJReg", "in": "Jump"},
+		{"from": "Control", "out": "Jump", "to": "ForkJump", "in": "In",  "start": {"x":230,"y": 90}},
 		{"from": "ForkJReg", "out": "Out1", "to": "MuxJReg", "in": "1", "points": [{"x": 370, "y": 440}, {"x": 35, "y": 440}]},
-		{"from": "MuxJReg", "out": "Out", "to": "PC", "in": "NewPC"}
+		{"from": "MuxJReg", "out": "Out", "to": "PC", "in": "NewPC"},
+		{"from": "ForkJump", "out": "Out2", "to": "OrFlush2", "in": "Jump"},
+		{"from": "OrFlush2", "out": "Flush", "to": "IF/ID", "in":"Flush"}
 	],
 	"reg_names": ["zero", "at", "v0", "v1", "a0", "a1", "a2", "a3", "t0", "t1", "t2", "t3", "t4", "t5", "t6", "t7", "s0", "s1", "s2", "s3", "s4", "s5", "s6", "s7", "t8", "t9", "k0", "k1", "gp", "sp", "fp", "ra"],
 	"instructions": "default.set"
